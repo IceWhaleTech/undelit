@@ -1,0 +1,22 @@
+name: Release Raw Module
+
+on:
+    push:
+        tags:
+            - 'v*'
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            -   uses: actions/checkout@v3
+            -   run: rm -rf .github
+            -   run: rm testdisk.raw || true
+            -   run: mksquashfs raw/ testdisk.raw
+            -   name: '更新 Update release'
+                uses: zhanghengxin/git-release-private@ice
+                with:
+                    token: ${{ secrets.GITHUB_TOKEN }}
+                    allow_override: true
+                    gzip: false
+                    tag: ${{ steps.get_version.outputs.VERSION }}
+                    files: ./testdisk.raw
