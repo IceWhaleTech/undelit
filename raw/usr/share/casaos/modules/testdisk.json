@@ -1,8 +1,0 @@
-{
-    "name": "testdisk",
-    "services": [
-        {
-            "name": "testdisk"
-        }
-    ]     
-}
